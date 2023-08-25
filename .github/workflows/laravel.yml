@@ -30,10 +30,6 @@ jobs:
       run: ./mc alias set laravel/ http://localhost:9000 laravelminio laravelminio
     - name: Execute Minio Client Create Bucket
       run: ./mc mb laravel/laravel
-    - name: Create test file
-      run: echo tehee > test
-    - name: Copy file to minio
-      run: ./mc cp test laravel/laravel/test
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
@@ -64,6 +60,10 @@ jobs:
       run: php artisan devops-test:mysql
     - name: Test Redis
       run: php artisan devops-test:redis
+    - name: Create test file
+      run: echo tehee > test
+    - name: Copy file to minio
+      run: ./mc cp test laravel/laravel/test
     - name: Test Minio
       run: php artisan devops-test:minio
     - name: Execute tests (Unit and Feature tests) via PHPUnit
