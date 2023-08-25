@@ -13,14 +13,20 @@ jobs:
 
     services:
       minio:
+        # fixme: let's not depend on external unofficial image
         image: lazybit/minio
         ports:
           - 9000:9000
         env:
-          MINIO_ACCESS_KEY: laravel
-          MINIO_SECRET_KEY: laravel
+          MINIO_ROOT_USER: laravel
+          MINIO_ROOT_PASSWORD: laravel
+        options: --name=minio --health-cmd "curl http://localhost:9000/minio/health/live"
 
     steps:
+    - run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
+    - run: chmod +x ./mc
+    - run: ./mc alias set minio http://127.0.0.1:9000 laravel laravel
+    - run: ./mc mb --ignore-existing minio/MY_BUCKET
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
