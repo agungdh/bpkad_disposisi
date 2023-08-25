@@ -24,6 +24,12 @@ jobs:
       run: MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server miniodata --console-address ":9001" &
     - name: Download Minio Client
       run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
+    - name: Download Minio Client
+      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc2
+    - name: Download Minio Client
+      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc3
+    - name: Check disk free space
+      run: df -h
     - name: Allow execution Minio Client
       run: chmod +x mc
     - name: Execute Minio Client Create Alias
