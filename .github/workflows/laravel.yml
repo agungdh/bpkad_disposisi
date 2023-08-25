@@ -16,6 +16,8 @@ jobs:
       run: wget https://dl.min.io/server/minio/release/linux-amd64/minio
     - name: Create Minio Data Directory
       run: mkdir miniodata
+    - name: Chmod Data Directory
+      run: chmod 777 miniodata
     - name: Allow execution Minio Server
       run: chmod +x minio
     - name: Execute Minio Server
