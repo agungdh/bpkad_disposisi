@@ -11,6 +11,15 @@ jobs:
 
     runs-on: ubuntu-22.04
 
+    services:
+      minio:
+        image: lazybit/minio
+        ports:
+          - 9000:9000
+        env:
+          MINIO_ACCESS_KEY: laravel
+          MINIO_SECRET_KEY: laravel
+
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -23,11 +32,6 @@ jobs:
         mysql password: 'laravel'
     - name: Start Redis
       uses: supercharge/redis-github-action@1.6.0
-    - name: Start UP MinIO
-      uses: infleet/minio-action@v0.0.1
-      with:
-        username: "laravel"
-        password: "laravel"
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -47,7 +51,7 @@ jobs:
       run: php artisan devops-test:mysql
     - name: Test Redis
       run: php artisan devops-test:redis
-    - name: Test Redis
+    - name: Test Minio
       run: php artisan devops-test:minio
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
