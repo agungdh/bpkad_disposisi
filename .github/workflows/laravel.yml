@@ -23,6 +23,11 @@ jobs:
         mysql password: 'laravel'
     - name: Start Redis
       uses: supercharge/redis-github-action@1.6.0
+    - name: Start UP MinIO
+      uses: infleet/minio-action@v0.0.1
+      with:
+        username: "laravel"
+        password: "laravel"
     - uses: actions/checkout@v3
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
