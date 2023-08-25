@@ -11,22 +11,7 @@ jobs:
 
     runs-on: ubuntu-22.04
 
-    services:
-      minio:
-        # fixme: let's not depend on external unofficial image
-        image: lazybit/minio
-        ports:
-          - 9000:9000
-        env:
-          MINIO_ROOT_USER: laravel
-          MINIO_ROOT_PASSWORD: laravel
-        options: --name=minio --health-cmd "curl http://localhost:9000/minio/health/live"
-
-    steps:
-    - run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
-    - run: chmod +x ./mc
-    - run: ./mc alias set minio http://127.0.0.1:9000 laravel laravel
-    - run: ./mc mb --ignore-existing minio/MY_BUCKET
+    steps:          
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
@@ -36,6 +21,29 @@ jobs:
         mysql database: 'laravel'
         mysql user: 'laravel'
         mysql password: 'laravel'
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+    - name: Setup minio
+      run: |
+        docker run -d -p 9000:9000 --name minio 
+                  -e "MINIO_ACCESS_KEY=laravel" 
+                  -e "MINIO_SECRET_KEY=laravel" 
+                  -v /tmp/data:/data 
+                  -v /tmp/config:/root/.minio 
+                  minio/minio server /data
+        export AWS_ACCESS_KEY_ID=laravel
+        export AWS_SECRET_ACCESS_KEY=laravel
+        export AWS_EC2_METADATA_DISABLED=true
+        aws --endpoint-url http://127.0.0.1:9000/ s3 mb s3://laravel          
+    - name: Run Go Test
+      run: go test -v ./...
+      env:
+        AWS_S3_BUCKET: laravel
+        AWS_S3_ACCESS_KEY: laravel
+        AWS_S3_SECRET_KEY: laravel
+        AWS_S3_ENDPOINT: http://127.0.0.1:9000
     - name: Start Redis
       uses: supercharge/redis-github-action@1.6.0
     - uses: actions/checkout@v3
