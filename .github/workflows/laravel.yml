@@ -28,8 +28,6 @@ jobs:
       run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc2
     - name: Download Minio Client
       run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc3
-    - name: Check disk free space
-      run: df -h
     - name: Allow execution Minio Client
       run: chmod +x mc
     - name: Execute Minio Client Create Alias
@@ -70,6 +68,8 @@ jobs:
       run: php artisan devops-test:mysql
     - name: Test Redis
       run: php artisan devops-test:redis
+    - name: Check disk free space
+      run: df -h
     - name: Test Minio
       run: php artisan devops-test:minio
     - name: Execute tests (Unit and Feature tests) via PHPUnit
