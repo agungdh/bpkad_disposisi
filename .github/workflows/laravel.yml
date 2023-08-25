@@ -16,8 +16,16 @@ jobs:
       run: wget https://dl.min.io/server/minio/release/linux-amd64/minio
     - name: Allow execution Minio Server
       run: chmod +x minio
-    - name: Allow execution Minio Server
-      run: MINIO_ROOT_USER=laravel MINIO_ROOT_PASSWORD=laravel ./minio server /mnt/data --console-address ":9001"
+    - name: Execute Minio Server
+      run: MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server /mnt/data --console-address ":9001"
+    - name: Download Minio Client
+      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
+    - name: Allow execution Minio Client
+      run: chmod +x mc
+    - name: Execute Minio Client Create Alias
+      run: ./mc alias set laravel/ http://localhost:9000 laravelminio laravelminio
+    - name: Execute Minio Client Create Bucket
+      run: ./mc mb laravel/laravel
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
