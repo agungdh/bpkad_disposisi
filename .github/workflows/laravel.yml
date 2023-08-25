@@ -19,7 +19,7 @@ jobs:
     - name: Allow execution Minio Server
       run: chmod +x minio
     - name: Execute Minio Server
-      run: MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server miniodata --console-address ":9001"
+      run: minioserver & MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server miniodata --console-address ":9001"
     - name: Download Minio Client
       run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
     - name: Allow execution Minio Client
