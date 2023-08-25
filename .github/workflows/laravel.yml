@@ -31,7 +31,7 @@ jobs:
     - name: Execute Minio Client Create Bucket
       run: ./mc mb laravel/laravel
     - name: Create test file
-      run: cat tehee > test
+      run: echo tehee > test
     - name: Copy file to minio
       run: ./mc cp test laravel/laravel/test
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
