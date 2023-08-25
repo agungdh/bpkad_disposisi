@@ -22,14 +22,6 @@ jobs:
       run: chmod +x minio
     - name: Execute Minio Server
       run: MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server miniodata --console-address ":9001" &
-    - name: Download Minio Client
-      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
-    - name: Allow execution Minio Client
-      run: chmod +x mc
-    - name: Execute Minio Client Create Alias
-      run: ./mc alias set laravel/ http://localhost:9000 laravelminio laravelminio
-    - name: Execute Minio Client Create Bucket
-      run: ./mc mb laravel/laravel
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.1'
@@ -60,6 +52,14 @@ jobs:
       run: php artisan devops-test:mysql
     - name: Test Redis
       run: php artisan devops-test:redis
+    - name: Download Minio Client
+      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
+    - name: Allow execution Minio Client
+      run: chmod +x mc
+    - name: Execute Minio Client Create Alias
+      run: ./mc alias set laravel/ http://localhost:9000 laravelminio laravelminio
+    - name: Execute Minio Client Create Bucket
+      run: ./mc mb laravel/laravel
     - name: Create test file
       run: echo tehee > test
     - name: Copy file to minio
