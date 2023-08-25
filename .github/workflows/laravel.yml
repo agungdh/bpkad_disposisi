@@ -24,10 +24,6 @@ jobs:
       run: MINIO_ROOT_USER=laravelminio MINIO_ROOT_PASSWORD=laravelminio ./minio server miniodata --console-address ":9001" &
     - name: Download Minio Client
       run: wget https://dl.min.io/client/mc/release/linux-amd64/mc
-    - name: Download Minio Client
-      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc2
-    - name: Download Minio Client
-      run: wget https://dl.min.io/client/mc/release/linux-amd64/mc -O mc3
     - name: Allow execution Minio Client
       run: chmod +x mc
     - name: Execute Minio Client Create Alias
@@ -35,7 +31,7 @@ jobs:
     - name: Execute Minio Client Create Bucket
       run: ./mc mb laravel/laravel
     - name: Create test file
-      run: touch test
+      run: cat tehee > test
     - name: Copy file to minio
       run: ./mc cp test laravel/laravel/test
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -68,8 +64,6 @@ jobs:
       run: php artisan devops-test:mysql
     - name: Test Redis
       run: php artisan devops-test:redis
-    - name: Check disk free space
-      run: df -h
     - name: Test Minio
       run: php artisan devops-test:minio
     - name: Execute tests (Unit and Feature tests) via PHPUnit
