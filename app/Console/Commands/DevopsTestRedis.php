@@ -26,7 +26,7 @@ class DevopsTestRedis extends Command
      */
     public function handle()
     {
-        Cache::put('random-number_123 456', rand());
+        Cache::put('random-number_123 456', config('app.timezone').': '.date('Y-m-d H:i:s'));
 
         $this->line(Cache::get('random-number_123 456'));
     }
