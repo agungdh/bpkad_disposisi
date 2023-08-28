@@ -68,6 +68,10 @@ jobs:
       run: ./mc cp test laravel/laravel/test
     - name: Test Minio
       run: php artisan devops-test:minio
+    - name: Install NodeJS Dependency
+      run: npm install
+    - name: Build NodeJS
+      run: npm run build
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
