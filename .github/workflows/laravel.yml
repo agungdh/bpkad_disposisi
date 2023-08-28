@@ -68,10 +68,13 @@ jobs:
       run: ./mc cp test laravel/laravel/test
     - name: Test Minio
       run: php artisan devops-test:minio
-    - name: Install NodeJS Dependency
-      run: npm install
-    - name: Build NodeJS
-      run: npm run build
+    - name: Use Node.js 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       env:
         DB_CONNECTION: mysql
