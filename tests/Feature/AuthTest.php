@@ -63,6 +63,13 @@ class AuthTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_unauthenticated_request_cant_get_user(): void
+    {
+        $response = $this->getJson('/api/user');
+
+        $response->assertUnauthorized();
+    }
+
     public function test_logout(): void
     {
         Sanctum::actingAs(User::inRandomOrder()->first());
