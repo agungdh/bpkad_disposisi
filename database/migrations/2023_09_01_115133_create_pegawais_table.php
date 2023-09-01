@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pegawais', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nama');
             $table->string('nip');
             $table->unsignedBigInteger('jabatan_id')->nullable();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('eselon_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('jabatan_id')->references('id')->on('jabatans');
             $table->foreign('pangkat_id')->references('id')->on('pangkats');
             $table->foreign('eselon_id')->references('id')->on('eselons');

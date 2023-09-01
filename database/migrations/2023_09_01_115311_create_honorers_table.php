@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('honorers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nama');
             $table->string('nik');
             $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->timestamps();
 
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('jabatan_id')->references('id')->on('jabatans');
         });
     }

@@ -13,11 +13,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            RoleSeeder::class,
             EselonSeeder::class,
             PangkatSeeder::class,
             BidangSeeder::class,
             JabatanSeeder::class,
+            PegawaiSeeder::class,
+            HonorerSeeder::class,
         ]);
+
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([
