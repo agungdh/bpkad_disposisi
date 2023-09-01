@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('nama');
-            $table->string('nik');
+            $table->string('nik')->unique();
             $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
