@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->unsignedBigInteger('pangkat_id')->nullable();
             $table->unsignedBigInteger('eselon_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

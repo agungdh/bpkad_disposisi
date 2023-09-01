@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('nik');
             $table->unsignedBigInteger('jabatan_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
