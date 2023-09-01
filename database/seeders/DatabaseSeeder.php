@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             JabatanSeeder::class,
             PegawaiSeeder::class,
             HonorerSeeder::class,
+            SuratMasukSeeder::class,
         ]);
 
         // \App\Models\User::factory(10)->create();
